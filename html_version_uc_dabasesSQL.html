@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+    <html>
+        <title>UC: Databases and SQL Querying in SQL server Management Studio 22</title>
+        <!--author ediaz-->
+        <body>
+            <ul style="text-align: justify;">
+
+                <div>
+                    <h3>UC: Databases and SQL Querying in SQL server Management Studio 22</h3>
+                    <p>
+                        
+<code>ediaz 2026</code>
+<br>
+Notes orignally made in Vi IMproved 9.2 and txvt-unicoide (urxvt) 9.31 using markdown text format, then re-written in HTML.
+<br>
+Revisions and corrections made in VSCodium 1.135. 
+                    </p>
+                    </div>
+<div>
+<h3>Section 1: Introduction to databases and querying</h3>
+<p>
+Prerequisites, since we are starting from ground zero. We will only look basic conccepts, so the audience is wide open.
+At the endd of the course, I'll be able to run some queries, make some aggregation and cover some basics of SQL usage.
+</p>
+
+<h4>¿What is a database?</h4>
+<p>
+A <b>database</b> is an organized collection of data. It is the collection of tables, queries, reports, views and other subjects. The data is typically organized to model aspects of reality in a way that supports processes requiring information.
+<br>
+You can represent data or retrieve data, depending in models thata requiere availability.
+<br>
+We you store data you must have a way to retrieve it, so storage is critical.
+<br>
+
+<br>
+When you book a flight ticket, you'll need this information:  
+<table>
+    <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Age</th>
+        <th>Booking/itin ID</th>
+        <th>Phone</th>
+    </tr>
+</table>
+
+At this course we'll run some queries against a server, we'll learn just the basic queries.  
+<br>
+For example is usual to need an analysis of tables: "Pull the total gross bookig amount for 2015".
+<table>
+    <tr>
+        <th>Booking</th>
+        <th>Gross ammount</th>
+        <th>Date</th>
+    </tr>
+    <tr>
+        <td>123</td>
+        <td>122</td>
+        <td>20150101</td>
+    </tr>
+    <tr>
+        <td>2332</td>
+        <td>321</td>
+        <td>20150104</td>
+    </tr>
+    <tr>
+        <td>2334</td>
+        <td>300</td>
+        <td>20150106</td>
+    </tr>
+</table>
+
+The operation needed is <code>122 + 312 + 300 = 743</code>.
+</p>
+</div>
+
+<div>
+    <h4>Data</h4>
+    <p>
+    What can we store in a database:  we can store text, numbers decimals and images or objects.  
+    <br>
+    How do we store data: first we need to understand what data needs to be stored. We'll just see structured data aka information that goes into tables. We'll create tables accordingly, then we query and that's it.
+    <br>
+    Let's put it together: Airline database - reservation, flights and passenger data - query.
+</p>
+</div>
+
+<div>
+    <h3>Section 2: Installing, setting up environment, SQL management studio</h3>
+    <p>
+Environment setup:<br>
+This is almost aways set up by database administrators.<br>
+We'll need **MS-SQL Server** 2008, 2012 or 2014 (free editions).
+<br>
+<br>
+<li>1. database (database engine)</li>
+<li>2. Tools (tools thata interact with the database and prints it into human readable formats.</li>
+<br>
+<br>
+Difference betwween tools and databases: SQL server management studio intereracts with the bases, provides syntax checking.<br>
+
+I am trying to install how the instructor showed, <b>Microsoft® SQL Server® 2022 Express</b>, that is a powerful and reliable free data management system that delivers a rich and reliable data store for lightweight Web Sites and desktop applications.
+<br>
+This actually did not work for me, so I am now installing Microwsoft SQL Server 2025 Express using <b>Windows 11</b> package manager:
+<br>
+<kbd>
+winget search sqlserver
+<br>winget show Microsoft.SQLServer.2025.Express
+<br>#that outputs information about the package
+<br>winget install Microsoft.SQLServer.2025.Express
+</kbd>
+
+<br>
+The instructor did look up for "sql server with tools" and he selected "express advance edition". Finally got the stand alone installation.
+
+
+<h4>Creating your first SQL table</h4>
+We'll use Microsoft SQL Server Management Studio, we will try basic syntax and queries.
+<br><br>
+We have options to connect to some servers, for him There is is an option into the <code>Object Explorer</code> that says <code>Connect</code>. We will use a Local Database.  
+<br><br>
+For us in MS Server Management Sudio 22, it's in the same place: <code>Landing page - Object Explorer - Connect</code>.
+<br><br>
+In my case, I could not start any other connection but the third option "Local" did work: <code>(localdb) - MSSQLlocalDB - <default> - using Windows authenticantion</code>.  
+<br><br>
+
+Now we will go to option `New Query`, that will open a new window where we can enter our statement:
+<br>
+<kbd>
+create database mytestdb  
+<br>#and then Execute
+</kbd>
+This promt will create a new datatabase inside *Databases* folder with the name specified. The instructor recommends using a wizard instead `right click on databases - New database - name it mytestdb2 - ok`.  
+<br><br>
+To create a table inside our database with two headers and 50 records top; we will use:  
+```code
+create table mytesttable
+(
+rollno int,
+firstname varchar(50),
+lastname varchar(50)
+)
+```
+
+We'll now select only the lines that we want to execute. If we execute that query, as it is, we will find that table inside *Master* datatabase and we need it inside *mytestdb*.   
+We have two ways to do that, one is using the combox above the  *Object explorer* and select the desired db where to execute; and the other way consist in stating `use mytestdb` as part of the query:  
+```code
+use mytestdb
+
+create table mytesttable
+(
+rollno int,
+firstname varchar(50),
+lastname varchar(50)
+)
+```
+
+This will create an object inside `mytestdb - Tables - dbo.mytesttable`.  
+```query2
+use mytestdb
+select rollno, firstname, lastname from mytesttable
+```
+If we run this query, we will get a message saying `Query executed succesfully` and an empty table with three columns: *rollno*, *firstname* and *lastname*.
+
+### Creating tables  
+We can create new tables using the wizar over `Object explorer\Tables\right click\New\Table` and then creating each column setting name, data type and allow nulls; and affter saving the table selecting a name.
+
+### Inserting records to a table   
+To insert information to a table we use the "insert" command.  
+
+```query3
+use mytestdb
+insert into mytesttable(rollno, firstname, lastname)
+values(1, 'Fernando', 'Tezozomoc')
+```
+
+### Installing Sample Database (Adventure Works) and querying  
+Steps:
+* Install sample database  
+* Querying a single tablee    
+* Conditional Querying  
+* Playing with conditional querying (exact match v/s pattern match)  
+### DB sample  
+We got a database sample from MS Ignite AdventureWorks data samples. We will end with a file with an extension *.bak* that contain twelve tables.  
+
+To import it we have to use `Object Explorer - right click on Restore Database - Source - Device - elipsis (...) - Path` and then complete the DB restoration.  
+
+We can try this query in this new added database:
+
+```query4  
+use AdventureWorksLT2025
+select top 10 * from [SalesLT].[Customer]
+order by LastName, FirstName
+```
+## Section 3: Deep dive into querying  
+### Section 3, part 1: Let's start writting some SQL code
+In this part we will discuss some problem statements and will try to write some queries against them.  
+First we need to make sure we are unsing the right database and tables, `Object explorer - Databases - (in this case) [AdventureWorks2012] - [HumanResources].[Department]`.  
+
+Since I don't have access to the data samples the intructor used I tried to replicate the statements usign a different base; this is an example of the text inside a working space in **MS SQL Server Management 22**:  
+
+```query5
+-- Statement 1 (st1)
+use AdventureWorksLT2025
+select top 10 * from [SalesLT].[SalesOrderDetail]	
+
+/*
+I did use st1 to retreive a set of example lines to work with
+I choose Sales order 71774 to create a simple table with all the information needed by some invoicers
+SalesOrderID	SalesOrderDetailID	OrderQty	ProductID	UnitPrice	UnitPriceDiscount	LineTotal	rowguid	ModifiedDate
+71774	110562	1	836	356.898	0.00	356.898000	E3A1994C-7A68-4CE8-96A3-77FDD3BBD730	2008-06-01 00:00:00.000
+*/
+
+--st2
+select top 1 * from [SalesLT].[Customer]
+/*I used st2 to get some information about customers to put into my table
+
+CustomerID	NameStyle	Title	FirstName	MiddleName	LastName	Suffix	CompanyName	SalesPerson	EmailAddress	Phone	PasswordHash	PasswordSalt	rowguid	ModifiedDate
+1	0	Mr.	Orlando	N.	Gee	NULL	A Bike Store	adventure-works\pamela0	orlando0@adventure-works.com	245-555-0173	L/Rlwxzp4w7RWmEgXX+/A7cXaePEPcp+KwQhl2fJL7w=	1KjXYs4=	3F5AE95E-B87D-4AED-95B4-C3797AFCB74F	2005-08-01 00:00:00.000
+
+from all the headers I will use CompanyName, SalesPerson, EmailAddress, and Phone
+ is important to avoid printing PasswordSalt, PasswordHash and other ids
+ */
+
+--st3
+use AdventureWorksLT2025
+select * from [SalesLT].[SalesOrderHeader]
+where [SalesOrderID] = 71774
+
+/* st3 showed all headers form sales order 71774*/
+
+--st4
+select top 10 * from [SalesLT].[Product]
+/* st4 showed a sample with all headers from the Table Products */
+
+--st5
+select top 10 * from [SalesLT].[Product]
+where Color like 'Red'
+/*st5 showed a sample of the records that had a red color from the Table Products */
+
+--st6
+Select * from [SalesLT].[Product]
+where ProductID = 836
+/*st6 showed the record of sale with productid 836*/
+
+--st7
+select distinct CompanyName from [SalesLT].[Customer]
+/*st7 showed all the companies that appear in the Customer Table*/
+
+--st8
+select Name from [SalesLT].[Product]
+where Name LIKE '%MOUNTAIN%'
+/*st8 used to show all the Products that have ¨Mountain¨ as part of their name
+'%Mountain%' will show records that contain the pattern.
+'Mountain%' will show the records that begin with Mountain
+*/
+
+select top 10 * from [SalesLT].[SalesOrderDetail]
+
+--st9
+select * from [SalesLT].[Product]
+where ListPrice >= '1000'
+/* in st9 I listed all the Products that have an equal or higher price than 1k */
+
+--st10
+select * from [SalesLT].[Product]
+where ProductModelID IN (6,11)
+/*In st10 listed the Products that have a model ID as 6 or 11, only work for integers */
+
+--st11
+select * from [SalesLT].[SalesOrderDetail]
+where ModifiedDate between '2008-06-01' and '2008-06-02'
+/*st11 will print all the sale orders that where modified between two days*/
+```
+This processes are separated by blocks of comments that help to document and to state new rules while working with some some tools. We can save this queries in file saves as `.sql`.
+
+### Section 3, part 2 Deep dive into SQL querying  
+We will continue to add more concepts. We already saw some filtering statements, some listing statements and now we are goint to start a concept called: **calculated columns**.  
+
+A **calculated column** might be a third column based in other two pre-existed columns where against we made some operations.  
+
+```query6
+use AdventureWorksLT2025
+
+--st12
+select Name, ListPrice from [SalesLT].[Product]
+select Name, ListPrice, ListPrice + 15 as Price_increment from [SalesLT].[Product]
+/*In this instance we are adding 15 units to the price of column ListPrice and getting it into our table*/
+```
+To store a calculated column into a table we will use a **into** clause.
+```query7
+select Name, ListPrice, ListPrice + 15 as Price_increment into [SalesLT].[customtable01] from [SalesLT].[Product]
+/*To store a calculated column into a table we will use a **into** clause
+we'll insert into a logic an the container table will be created in the database we are currently wonking on*/
+```
+after refreshing out `Object Explorer window` we'll be able to see the recently created table, output.  
+
+We can list the contents of the operation in the new table, as we just created a new **permanent table**, Name, List price and List price plus an increment.  
+|Name|ListPrice|Price_increment|
+|---|---|---|
+|Mountain-400-W Silver, 40|769.49|784.49|
+
+To create a **temporary table**, that we will lose after we close session, we can use most of the same logic but the *into* clause.
+```query8
+select Name, ListPrice, ListPrice + 15 as Price_increment into #tmptable from [SalesLT].[Product]
+select * from #tmptable
+```
+
+Now we can see how to **delete**, data from a table. Running this statement we will delete just one record of our table:  
+```query9
+delete from [SalesLT].[customtable01]
+where Name like 'AWC Logo Cap'
+```
+
+We'll see now how to use the **update** statement. 
+```query10
+--Update
+update [SalesLT].[customtable01]
+set Name = 'HL Road Frame - Black, 58 magical'
+where Name like 'HL Road Frame - Black, 58'
+select * from [SalesLT].[customtable01]
+where Name like '%magical%'
+```
+after this execution, all the records that match with that specific given text value will be updated.  
+|Name|ListPrice|Price_increment|
+|---|---|---|
+|HL Road Frame - Black, 58 magical|1431.50|1446.50|
+
+## Section 4: SQL joins  
+Until now we already queried from a single query, but in real life most likely we will have to create multiple tables together.  
+
+## Section 4 part 1
+**Joins** are syntax that allow us to merge two or more tables together, when tables are joined there'll be at least one column which is common across both.  
+
+There are three main Join types:  
+* Inner join  
+* Outer join  
+* Cross join  
+
+### Inner join  
+For example, we could have these two tables:  
+| EmployeeID|FirstName|LastName|
+|---|---|---|
+|1|Michael|Scott|
+|2|Pam|Beesly|
+|3|Dwight|Shrute|
+
+| EmployeeID|Salary|
+|---|---|
+|1|10000|
+|2|8000|
+|3|6000|
+
+Now let's imagine we need All the employees, their first and last name, and their salary.  
+
+In *inner joins* we will only get the records that exist in both tables, there should be atleast 1 match between both the tables.  
+
+### Outer joins  
+
+|EmployeeID|FirstName|LastName|
+|---|---|---|
+|1|Michael|Scott|
+|2|Pam|Beesly|
+|3|Dwight|Shrute|
+
+|EmployeeID|Salary|
+|---|---|
+|1|10000|
+|2|8000|
+|3|6000|
+
+|EmployeeID|PhoneNumber|
+|---|---|
+|1|121-112-3342|
+|2|111-111-1111|
+
+As an example I will create this three tables in MSST, this query will create the first table:
+
+```creating employees1
+use mytestdb
+create table dbo.employees
+(
+EmployeeID varchar(50),
+FirstName varchar(50),
+LastName varchar(50)
+)
+```
+Inserting values into table:
+```inserting into employees1
+insert into dbo.employees(EmployeeID, FirstName, LastName)
+values(1,'Michael','Scott')
+
+insert into dbo.employees(EmployeeID, FirstName, LastName)
+values(2,'Pam','Beesly')
+
+insert into dbo.employees(EmployeeID, FirstName, LastName)
+values(3,'Dwight','Shrute')
+```
+The second table was made in one execution:  
+```table salary
+--table salary
+use mytestdb
+
+create table dbo.salary
+(
+EmployeeID varchar(50),
+Salary int
+)
+
+insert into dbo.salary(EmployeeID, Salary)
+values(1,'10000')
+
+insert into dbo.salary(EmployeeID, Salary)
+values(2,'8000')
+
+insert into dbo.salary(EmployeeID, Salary)
+values(3,'6000')
+
+select * from dbo.salary
+```
+This was the syntax of the creation of the third table:  
+```table Phone Number  
+--table phone number
+use mytestdb
+create table dbo.PhoneNumber
+(
+EmployeeID varchar(50),
+PhoneNumber varchar(50)
+)
+
+insert into dbo.PhoneNumber(EmployeeID, PhoneNumber)
+values(1,'121-112-3342')
+
+insert into dbo.PhoneNumber(EmployeeID, PhoneNumber)
+values(2,'111-111-1111')
+
+select * from dbo.PhoneNumber
+```
+Outer joins should get all the data even there is no data in the third join.
+
+<!--- 5:49 --->
+### Left outer joins  
+What happens when I left join employees table with table phone number.
+
+Left join basically says give me all the common rows, but if don't find a row left it null.
+
+### Right outer join  
+Prints everything from the later table.  
+
+## Full outer join  
+Is basically left and right outer joins.
+<br><br>
+Table1:  
+<table>
+    <tr>
+        <th>Customer_ID</th>
+        <th>Customer_Name</th>
+    </tr>
+    
+    <tr>
+        <td>1</td>
+        <td>Rakesh</td>
+    </tr>
+
+    <tr>
+        <td>3</td>
+        <td>John</td>
+    </tr>
+
+</table>
+
+<br><br>
+Table2:
+<br>
+<table>
+
+<tr>
+    <th>Order_No</th>
+    <th>Order_name</th>
+    <th>Customer_ID</th>
+</tr>    
+<tr>
+    <td>1</td>
+    <td>SomeOrder1</td>
+    <td>1</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td>SomeOrder2</td>
+    <td>2</td>
+</tr>
+<tr>
+    <td>3</td>
+    <td>SomeOrder3</td>
+    <td>7</td>
+</tr>
+<tr>
+    <td>4</td>
+    <td>SomeOrder4</td>
+    <td>8</td>
+</tr>
+
+</table>  
+
+<br><br>
+Full Outer Join:  
+<table>
+<tr>
+    <th>Customer_ID</th>
+    <th>Customer_Name</th>
+    <th>Customer_ID</th>
+    <th>Order_Name</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td>Rakesh</td>
+    <td>1</td>
+    <td>SomeOrder1</td>
+</tr>
+<tr>
+    <td>3</td>
+    <td>John</td>
+    <td>NULL</td>
+    <td>NULL</td>
+</tr>
+<tr>
+    <td>NULL</td>
+    <td>NULL</td>
+    <td>2</td>
+    <td>SomeOrder2</td>
+</tr>
+<tr>
+    <td>NULL</td>
+    <td>NULL</td>
+    <td>7</td>
+    <td>SomeOrder3</td>
+</tr>
+
+<tr>
+    <td>NULL</td>
+    <td>NULL</td>
+    <td>8</td>
+    <td>SomeOrder4</td>
+</tr>
+
+
+</table>
+
+<div>
+
+<h3>References</h3>
+<li>Gopalakrishnan, Rakesh (2018). <i>Udemy course: Introduction to Databases and SQL Querying</i>.
+    <br>
+    <a href="https://www.udemy.com/share/101rjM3@7Ycqe1-t2dmdkq2AoUDrz0RyoLfTJ7xc3eTxJKdHXxSAWmCOR5GTTuaYTx20jf9_cg==/">https://www.udemy.com/share/101rjM3@7Ycqe1-t2dmdkq2AoUDrz0RyoLfTJ7xc3eTxJKdHXxSAWmCOR5GTTuaYTx20jf9_cg==/</a>
+    </li>
+<br>
+<li>Kumar Sahoo, Bijay (2026). <i>How to Comment in SSMS</i>.
+    <br>
+    <a href="https://sqlserverguides.com/how-to-comment-in-ssms/">https://sqlserverguides.com/how-to-comment-in-ssms/</a>
+    </li>
+<br>
+<li>Microsoft (2026). <i>Microsoft Ignite: AdventureWorks sample databases - Lightweight</i>.  
+   <br> <a href="https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver17&tabs=ssms">https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver17&tabs=ssms</a>  
+</li>
+<br>
+
+<li>
+    Microsoft (2026). <i>Microsoft Ignite: LIKE (Transact-SQL)</i>.
+    <br>
+    <a href="https://learn.microsoft.com/en-us/sql/t-sql/language-elements/like-transact-sql?view=sql-server-ver17">https://learn.microsoft.com/en-us/sql/t-sql/language-elements/like-transact-sql?view=sql-server-ver17</a>
+    
+</li>
+<br>
+
+<li>
+    Microsoft (2026). <i>Microsoft Ignite: INSERT (Transact-SQL)</i>.
+    <br>
+    <a href="https://learn.microsoft.com/en-us/sql/t-sql/statements/insert-transact-sql?view=sql-server-ver17">https://learn.microsoft.com/en-us/sql/t-sql/statements/insert-transact-sql?view=sql-server-ver17</a>
+    
+</li>
+<br>
+<li>
+    Microsoft (2024). <i>Microsoft SQL Server 2022 Express</i>.
+    <br>
+    <a href="https://www.microsoft.com/en-us/download/details.aspx?id=104781&lc=1033">https://www.microsoft.com/en-us/download/details.aspx?id=104781&lc=1033</a>
+    
+</li>
+<br>
+<li>
+    Microsoft (2026). <i>Microsoft SQL server downloads: Microsoft SQL Server 2025 Express</i>.
+    <br>
+    <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">https://www.microsoft.com/en-us/sql-server/sql-server-downloads</a>
+    <br>
+</li>
+
+</div>
+            </ul>
+        </body>
+    </html>
