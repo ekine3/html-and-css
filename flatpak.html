@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+    <html>
+        <title></title>
+        <!--author ediaz-->
+        <body>
+            <ul style="text-align: justify;">
+
+                <div>
+                    
+                    <p>
+                        <code>ediaz</code>.
+                        <br>
+                        Notes and further revisions made in <i>VSCodium</i> using <i>HTML</i>format for <i>G Blogger</i>. 2026.
+                        
+                    </p>
+                </div>
+
+                <div>
+                    <h4>What is Flatpak?</h4>
+                    <p>
+                        Is an independent from distribution package manager aiming to function in separated environments allowing it to work in different systems.
+                        <!--04-->
+                      	<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgH793mqj0eeOr1lYlX6TM2-kqa1RcBGYjxT23V1if9ai-T7JLuHr-rnfXKqHiw3uBPeYYHf0LykXmooAjMKz1f4JeHyajd6kLOuRMWk5Ksig0CPRoIvIu1zOZ4TwDIMJTcABGAJ_3zkqCOQS22ZnFgndY-BepqVyT92vZ7E_DuQSWRGKl3s2WG1nXbz5k/s1600/04.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" data-original-height="685" data-original-width="934" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgH793mqj0eeOr1lYlX6TM2-kqa1RcBGYjxT23V1if9ai-T7JLuHr-rnfXKqHiw3uBPeYYHf0LykXmooAjMKz1f4JeHyajd6kLOuRMWk5Ksig0CPRoIvIu1zOZ4TwDIMJTcABGAJ_3zkqCOQS22ZnFgndY-BepqVyT92vZ7E_DuQSWRGKl3s2WG1nXbz5k/s1600/04.png"/></a></div>
+                      	
+                        <br>
+                        <br>
+                        <i>Flatpaks</i> are all-in-one packages that do not depend on other external packages, are installed at user level, they can be installed in a sandbox and work for plenty systems.
+                
+                    </p>
+                    
+                </div>
+
+                <div>
+                    <h4>How to install Ungoogled Chromium using Flatpak</h4>
+                    <p>
+                        <b>Ungoogled Chromium</b> is a lightweight approach to the browser removing Google web service dependency, retains default Chromium experience and enhances privacy control and transparency. For these and other reasons, this time I'll install the application in a <i>Majaro Linux</i> system using <i>Flatpack</i>.
+                        <br>
+                        <br>
+                        We can run the installer from the terminal, in this instance I was using <i>Xfce Terminal Emulator</i>, calling the application by just typing its moniker <b>flatpak</b>. Now, to know how to use the package manager we can search for documentation online or running:
+                        <br>
+                        <code>flatpak --help</code>
+                        <br>
+                        We will see the usage syntaxis.
+                        <!--help.png-->
+
+                        <br>
+                        <br>
+                        Now we will run a package search over Flatpak's repositories, using the "search" option:
+                        <br>
+                        <code>flatpak search chromium</code>
+                        <!--search.png-->
+                        <br>
+                        We'll see Packages that match the description of our search, the name of the package, the application id, their branch and repositories.
+                        <br>
+                        <br>
+                        In this case, I want to install the package "Ungoogled Chromium", to see more information about a specific package we can use the "info" option. We'll see a prompt with some useful information like the ID of the package, its version, the size, license, architecture among some more details:
+                        <br>
+                        <code>flatpak info io.github.ungoogled_software.ungoogled_chromium</code>
+                        <!--info.png-->
+
+                        <br>
+                        <br>
+                        After a view of the package description and information, we can install the package by using the "install" option. We will have to approve it's installation after a few confirmations, and we will see again infomation about the permission the package will ask to other programs, the state of the download and installation and check list of the steps completed; after that we will a final confirmation of the installation of the package.
+                        <br>
+                        <code>flatpak install io.github.ungoogled_software.ungoogled_chromium</code>
+                        <!--installation.png-->
+                        <br>
+                        <br>
+                        This is how the browser looks after its installation and running it, in this case over <i>Xfce</i> desktop environment with no usage or graphical issues:
+                        <!--packageinstalled.png-->
+                        <br>
+                        <br>
+                        Here we can see the application <i>PID</i> and using <i>htop</i> over a terminal and showing the process as a tree:
+                        <!--htop.png-->
+                    </p>
+                </div>
+                               
+                <div>
+                    <h3>References</h3>
+                    <li>Ungoogled Software (2026). <i>Github: Ungoogled-chromium</i>.
+                        <br>
+                        <a href="https://github.com/ungoogled-software/ungoogled-chromium">https://github.com/ungoogled-software/ungoogled-chromium</a>
+                    </li>
+                    <br>
+                    <li>
+                        Flatpak Team (2026). <i>Flatpak</i>.
+                        <br>
+                        <a href="https://flatpak.org/">https://flatpak.org/</a>
+                    </li>
+
+                </div>
+
+            </ul>
+        </body>
+    </html>
