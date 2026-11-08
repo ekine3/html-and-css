@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <author>ediaz</author>
+    <title>HyperText Transfer Protocol methods in REST</title>
+    <body>
+        <ul style="text-align: justify;">
+            <div>
+                <p>
+                    <code>ediaz</code>
+                    <br>
+                    Notes and further revisions made in <i>VSCodium</i> using <i>HTML</i> format.
+                    <br>
+                    <br>
+                    When we work with API's in <i>Rest</i>, we need to manipulate resources through HTTP methods, each method has a clear and specific purpose.
+                </p>
+            </div>
+
+            <div>
+                <h3>Definition</h3>
+                <p>
+                    The <i>HyperText Transfer Protocol</i> works to navigate websites and also define actions a client can do over the resources from a server.
+                    <br>
+                    These actions are mapped thorough HTTP methods:
+                    <br>
+                    <li><b>GET</b>: retreives information.</li><br>
+                    <li><b>POST</b>: creates a new resource.</li><br>
+                    <li><b>PUT</b>: updates a complete resource.</li><br>
+                    <li><b>PATCH</b>: partially updates a resource.</li><br>
+                    <li><b>DELETE</b>: deletes a resource.</li>
+                    <br><br>
+                    All these actions make the comunication between APIs REST intuitive and predictable.  
+                </p>
+            </div>
+
+            <div>
+                <h4>GET</h4>
+                <p>
+                    <i>GET</i> is used to retreive data form a server.
+                    <br>
+                    <li><b>Secure</b>: does not make changes in the server.</li>
+                    <li><b>Idempotence</b>: is the property of certain operations whereby they can be applied multiple times and without changing the results.</b></li>
+                    <br><br>
+                    <h5>Example of request</h5>
+                    We will use the public API <a href="https://jsonplaceholder.typicode.com/">JSON Placeholder</a>:
+                    <br>
+                    <code>GET https://jsonplaceholder.typicode.com/users/1</code>
+                    <br>
+                    <h5>Response in JSON</h5>
+                    <code>
+                        {<br>
+                            "id":1,<br>
+                            "name": "Leanne Graham",<br>
+                            "eamil": "Sincere@april.biz"<br>
+                        }
+                    </code>
+                    <br><br>
+                    Is useful to request resources <code>/users</code> or to obtain a specific resource <code>/users/1</code>.
+                    <!--get_postman_01.png-->
+                </p>
+            </div>
+
+            <div>
+                <h4>POST: create a new resource</h4>
+                <p>The <i>POST</i> method is used to create a new resource in the server.
+                <br>
+                <li><b>Not idempotence</b>: every time we execute it generates a new resource.</li>
+                <br>
+                <br>
+                <b>Example with <a href="https://curl.se/">cURL</a> (create a post)</b>:
+                <br>
+                <code>
+                curl -X POST https://jsonplaceholder.typicode.com/posts ^
+                <br>-H "Content-Type: application/json" ^
+                <br>-d "{ \"title\": \"Hola Mundo\", \"body\": \"Este es un ejemplo\", \"userId\": 1 }"
+                </code>
+                <br>
+                <br>
+                <b>Json response</b>:
+                <br>
+                <kbd>
+                    {<br>
+                "id": 101,<br>
+                "title": "Hola Mundo",<br>
+  "body": "Este es un ejemplo",
+  "userId": 1
+}
+                </kbd>
+                </p>
+            </div>
+
+            <div>
+                <h3>References</h3>
+                <li>Moisset Diego (2026), <i>Métodos HTTP en REST</i>.
+                    <br>
+                    <a href="https://www.tutorialesprogramacionya.com/apirestya/tema4.html">https://www.tutorialesprogramacionya.com/apirestya/tema4.html</a>
+                </li>
+                <br>
+                <li>Wikipedia (2026). <i>Idempotence</i>.
+                <br>
+                <a href="https://en.wikipedia.org/wiki/Idempotence">https://en.wikipedia.org/wiki/Idempotence</a>
+                </li>
+
+                <li>Typicode (2013). <i>JsonPlaceholder</i>.
+                    <br>
+                    <a href="https://jsonplaceholder.typicode.com/">https://jsonplaceholder.typicode.com/</a>
+                </li>
+
+                <li>Rudy Mens (2014). <i>How to use Invoke RestMethod in Powershell</i>.
+                    <br>
+                    <a href="https://lazyadmin.nl/powershell/invoke-restmethod/">https://lazyadmin.nl/powershell/invoke-restmethod/</a>
+                </li>
+
+
+            </div>
+
+            <div>
+                <h3>Examples</h3>
+                <li>
+                    <br>
+                </li>
+            </div>
+        </ul>        
+    </body>
+</html>
